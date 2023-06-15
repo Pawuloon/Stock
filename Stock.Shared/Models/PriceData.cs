@@ -1,10 +1,17 @@
-﻿namespace Stock.Shared.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Stock.Shared.Models;
 
 public class PriceData
 {
+    [Key]
     public int Id { get; set; }
+    
+    
     public string? Symbol {get; set;}
+    
     public bool Status { get; set; }
+    
     public DateTime? From { get; set; }
     public decimal? Open { get; set; }
     public decimal? High { get; set; }

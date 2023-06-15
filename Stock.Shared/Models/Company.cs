@@ -1,7 +1,10 @@
-﻿namespace Stock.Shared.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Stock.Shared.Models;
 
 public class Company
 {
+    [Key]
     public int Id { get; set; }
     public string? Name { get; set; }
     public string? Ticker { get; set; }
