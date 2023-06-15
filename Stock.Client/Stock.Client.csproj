@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Stock.Server\Stock.Server.csproj" />
       <ProjectReference Include="..\Stock.Shared\Stock.Shared.csproj" />
     </ItemGroup>
 
