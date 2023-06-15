@@ -29,7 +29,7 @@ public class CompanyController : ControllerBase
             var company = await _service.GetCompany(id);
             return Ok(company);
         }
-        catch (Exception e)
+        catch (NullReferenceException e)
         {
             return NotFound();
         }
@@ -39,7 +39,14 @@ public class CompanyController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddCompany([FromBody]Company company)
     {
-        await _service.AddCompany(company);
+        try
+        {
+            await _service.AddCompany(company);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
         return CreatedAtAction(nameof(GetCompany), new {id = company.Id}, company);
     }
     
@@ -59,7 +66,14 @@ public class CompanyController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCompany(int id)
     {
-        await _service.DeleteCompany(id);
+        try
+        {
+            await _service.DeleteCompany(id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
         return NoContent();
     }
 }

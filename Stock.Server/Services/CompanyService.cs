@@ -22,14 +22,25 @@ public class CompanyService : ICompanyService
     public async Task<Company?> GetCompany(int companyId)
     {
         var company = await _context.Companies.FindAsync(companyId);
+        if (company == null)
+        {
+            throw new NullReferenceException();
+        }
         return company;
     }
     
     public async Task AddCompany(Company? company)
     {
         if (company != null)
+        {
             _context.Companies.Add(company);
-        await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+        }
+        else
+        {
+            throw new NullReferenceException();
+        }
+        
     }
     
     public async Task DeleteCompany(int companyId)
@@ -40,10 +51,18 @@ public class CompanyService : ICompanyService
             _context.Companies.Remove(company);
             await _context.SaveChangesAsync();
         }
+        else
+        {
+            throw new NullReferenceException();
+        }
     }
     
     public async Task UpdateCompany(Company company)
     {
+        if (company == null)
+        {
+            throw new NullReferenceException();
+        }
         _context.Companies.Update(company);
         await _context.SaveChangesAsync();
     }
@@ -52,6 +71,8 @@ public class CompanyService : ICompanyService
     {
         return await _context.Companies.Where(c => c.Name != null && c.Name.Contains(searchTerm)).ToListAsync();
     }
+    
+    
     
     
 }
