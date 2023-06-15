@@ -1,7 +1,7 @@
-﻿namespace Stock.Server;
-
-public class Startup
+﻿namespace Stock.Server
 {
+    public class Startup
+    {
     
         public void ConfigureServices(IServiceCollection services)
         {
@@ -30,7 +30,10 @@ public class Startup
                 });
             });
         } 
+    }
 }
+
+
 
 
 

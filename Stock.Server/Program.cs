@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Stock
+namespace Stock.Server
 {
     public class Program
     {
@@ -15,7 +15,7 @@ namespace Stock
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(web =>
                 {
-                    // web.UseStartup<Starup>();
+                    web.UseStartup<Startup>();
                 });
     }
 }
