@@ -10,4 +10,6 @@ public interface IUserService
     Task<User> UpdateUser(User user);
     Task DeleteUser(int id);
     
+    
+
 }
