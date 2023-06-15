@@ -4,7 +4,7 @@ namespace Stock.Server.Data;
 
 public class StockDbContext : DbContext
 {
-   public DbSet<Company> Companies { get; set; }
+   public DbSet<Company> Companies { get; set; } = null!;
    public DbSet<PriceData> PriceData { get; set; }
    public DbSet<User> Users { get; set; }
    public DbSet<PriceCollection> PriceCollections { get; set; }
