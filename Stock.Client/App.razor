@@ -1,4 +1,5 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@using Stock.Pages
+<Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
         <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
@@ -10,3 +11,13 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code
+{
+    private void RouteConf(IRouteBuilder routeBuilder)
+    {
+        routeBuilder.MapRoute("default", "{controller}/{action}/{id?}");
+        routeBuilder.MapRoute("Login Route", "Login", typeof(Login));
+        
+    }
+}
