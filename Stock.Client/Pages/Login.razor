@@ -71,7 +71,7 @@ else
     }
 
     
-    private void Register()
+    private async void Register()
     {
         var user = new User()
         {
@@ -88,7 +88,7 @@ else
         }
         else
         {
-            var result = _userController.AddUser(user);
+            await _userController.AddUser(user);
             _message = "Registration successful";
         }
     }
