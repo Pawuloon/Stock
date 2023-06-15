@@ -25,7 +25,7 @@ public class Company
     public string? Bloomberg { get; set; }
     public int  Lei { get; set; }
     public int Figi { get; set; }
-    public List<string>? Tags { get; set; }
-    public List<string>? Similar { get; set; }
+    public string? Tags { get; set; }
+    public string? Similar { get; set; }
 
 }
