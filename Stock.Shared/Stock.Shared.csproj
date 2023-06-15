@@ -8,11 +8,11 @@
 
     <ItemGroup>
       <Compile Remove="Class1.cs" />
+      <Compile Remove="Models\Tag.cs" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="DTOs\" />
-      <Folder Include="Models\" />
     </ItemGroup>
 
 </Project>
