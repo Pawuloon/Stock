@@ -9,7 +9,7 @@ public interface IUserService
     Task AddUser(User user);
     Task<User> UpdateUser(User user);
     Task DeleteUser(int id);
-    
-    
+    Task<User> GetUserByCredentials(User user);
+
 
 }

@@ -20,7 +20,7 @@ public class UserController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUser(int id)
+    public async Task<IActionResult> GetUserById(int id)
     {
         try
         {
@@ -46,7 +46,7 @@ public class UserController : ControllerBase
         {
             return BadRequest();
         }
-        return CreatedAtAction(nameof(GetUser), new {id = user.Id}, user);
+        return CreatedAtAction(nameof(GetUserById), new {id = user.Id}, user);
     }
     
     [HttpPut("{id}")]
@@ -73,6 +73,21 @@ public class UserController : ControllerBase
             return NotFound();
         }
         return NoContent();
+    }
+    
+    
+    [HttpGet("login, password")]
+    public async Task<IActionResult>? GetUserByCredentials([FromBody]User user)
+    {
+        try
+        {
+            var userFromDb = await _service.GetUserByCredentials(user);
+            return Ok(userFromDb);
+        }
+        catch (NullReferenceException e)
+        {
+            return null;
+        }
     }
     
 }

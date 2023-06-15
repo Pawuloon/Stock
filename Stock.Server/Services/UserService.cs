@@ -60,5 +60,14 @@ public class UserService : IUserService
         }
     }
 
-    
+    public async Task<User> GetUserByCredentials(User user)
+    {
+        var us = await _context.Users
+            .FirstOrDefaultAsync(u => u.UserName == user.UserName && u.Password == user.Password);
+        if (us == null)
+        {
+            throw new NullReferenceException();
+        }
+        return us;
+    }
 }
