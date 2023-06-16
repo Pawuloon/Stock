@@ -2,7 +2,7 @@
 @page "/UserPage"
 @using Stock.Server.Controllers
 @using Stock.Shared.Models
-@inject UserController UserController
+@inject Stock.Server.Controllers.UserController UserController
 <h1>User Page</h1>
  
 @if(!string.IsNullOrEmpty(_message))

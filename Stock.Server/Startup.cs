@@ -7,6 +7,7 @@
         {
             // Add any services that your application requires here.
             // For example, you might add a database context or a service that handles authentication.
+            services.AddRazorPages();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
