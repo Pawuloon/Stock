@@ -1,8 +1,7 @@
-﻿using Stock.Shared.Models;
-@page "/UserPage"
-@using Stock.Server.Controllers
+﻿@page "/UserPage"
 @using Stock.Shared.Models
-@inject Stock.Server.Controllers.UserController UserController
+@using Stock.Server.Services
+@using Stock.Server.Controllers
 <h1>User Page</h1>
  
 @if(!string.IsNullOrEmpty(_message))
@@ -57,6 +56,7 @@ else
     private string? _email;
     private string? _message;
     private bool? _showLogin = true;
+    private readonly UserService _service;
   
 
     private void Log()
@@ -66,8 +66,16 @@ else
             UserName = _username,
             Password = _password
         };
-        var result =  UserController.GetUserByCredentials(user);
-        _message = result != null ? "Login successful" : "Login failed";
+       
+        try
+        {
+             var result =  _service.GetUserByCredentials(user);
+            _message = "Login successful";
+        }
+        catch (NullReferenceException e)
+        {
+           _message = "Login Failed";
+        }
     }
 
     
@@ -88,7 +96,7 @@ else
         }
         else
         {
-            await UserController.AddUser(user);
+            await _service.AddUser(user);
             _message = "Registration successful";
         }
     }

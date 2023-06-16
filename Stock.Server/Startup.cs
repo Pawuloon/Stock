@@ -1,4 +1,6 @@
-﻿namespace Stock.Server
+﻿using Stock.Server.Services;
+
+namespace Stock.Server
 {
     public class Startup
     {
@@ -8,6 +10,7 @@
             // Add any services that your application requires here.
             // For example, you might add a database context or a service that handles authentication.
             services.AddRazorPages();
+            services.AddScoped<UserService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
