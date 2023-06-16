@@ -1,7 +1,7 @@
 ﻿@page "/"
 @using Stock.Shared.Models
 @using Stock.Server.Services
-@using Stock.Server.Controllers
+
 <h1>User Page</h1>
  
 @if(!string.IsNullOrEmpty(_message))
@@ -51,6 +51,7 @@ else
 }
 @code 
 {
+    private User? _user = new();
     private string? _username;
     private string? _password;
     private string? _email;
@@ -58,8 +59,12 @@ else
     private bool? _showLogin = true;
     private readonly UserService _service;
   
+    public Login(UserService service)
+    {
+        _service = service;
+    }
 
-    private void Log()
+    private async void Log()
     {
         var user = new User()
         {
@@ -69,7 +74,7 @@ else
        
         try
         {
-             var result =  _service.GetUserByCredentials(user);
+             await _service.GetUserByCredentials(user);
             _message = "Login successful";
         }
         catch (NullReferenceException e)
@@ -96,7 +101,7 @@ else
         }
         else
         {
-            await _service.AddUser(user);
+             await _service.AddUser(user);
             _message = "Registration successful";
         }
     }
