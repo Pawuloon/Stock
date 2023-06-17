@@ -1,7 +1,78 @@
 ﻿@page "/stock"
-<h1>Stock</h1>
+@using global::Stock.Shared.Models
+@using global::Stock.Server.Services
+<h1>Stock Search</h1>
+
+<div class="search-container">
+    <input type="text" placeholder="Search.." @bind="searchTerm" @oninput="Search" />
+</div>
+
+@if (_filteredCompanies != null)
+{
+    <div class="search-results">
+        @foreach (var company in _filteredCompanies)
+        {
+            <div class="search-result" @onclick="() => SelectCompany(company)">
+                <p>@company.Name</p>
+            </div>
+        }
+    </div>
+}
+
+@if (_selectedCompany != null)
+{
+    <h2>Name: @_selectedCompany.Name</h2>
+
+    <p>Symbol: @_selectedCompany.Symbol</p>
+    <p>Description: @_selectedCompany.Description</p>
+    <p>Ceo: @_selectedCompany.Ceo</p>
+    <p>Industry: @_selectedCompany.Industry</p>
+
  
+}
 @code 
 {
-    
+    [Inject]
+    private PolygonService _polygonService { get; set; }
+    private List<Company>? _filteredCompanies;
+    private Company? _selectedCompany;
+    private string searchTerm;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _selectedCompany = await _polygonService.GetCompanyAsync(searchTerm);
+    }
+
+    private async void Search()
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            _filteredCompanies = null;
+        }
+        else
+        {
+            var companies = await _polygonService.GetCompanyAsync(searchTerm);
+            _filteredCompanies = new List<Company> { companies };
+        }
+    }
+
+    private async Task LoadCompany(string cName)
+    {
+        try
+        {
+            var company = await _polygonService.GetCompanyAsync(cName);
+            _selectedCompany = company;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+        }
+    }
+
+    private async void SelectCompany(Company company)
+    {
+        _selectedCompany = company;
+        if (_selectedCompany != null)
+            await LoadCompany(company.Name);
+    }
 }
