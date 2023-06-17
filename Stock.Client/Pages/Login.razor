@@ -1,7 +1,8 @@
 ﻿@page "/"
-@using Stock.Shared.Models
-@using Stock.Server.Services
 
+@using global::Stock.Server.Services
+@using global::Stock.Shared.Models
+@inject NavigationManager NavigationManager
 <h1>User Page</h1>
  
 @if(!string.IsNullOrEmpty(_message))
@@ -51,7 +52,6 @@ else
 }
 @code 
 {
-    private User? _user = new();
     private string? _username;
     private string? _password;
     private string? _email;
@@ -59,15 +59,12 @@ else
     private bool? _showLogin = true;
     private readonly UserService _service;
 
-    public Login()
-    {
-        
-    }
+   
     public Login(UserService service)
     {
         _service = service;
     }
-
+    
     private async void Log()
     {
         var user = new User()
@@ -80,6 +77,7 @@ else
         {
              await _service.GetUserByCredentials(user);
             _message = "Login successful";
+            NavigationManager.NavigateTo("/stock");
         }
         catch (NullReferenceException e)
         {

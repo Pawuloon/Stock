@@ -7,8 +7,6 @@ namespace Stock.Server
     
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add any services that your application requires here.
-            // For example, you might add a database context or a service that handles authentication.
             services.AddRazorPages();
             services.AddScoped<UserService>();
         }
@@ -28,6 +26,7 @@ namespace Stock.Server
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello, world!");
