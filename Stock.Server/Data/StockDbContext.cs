@@ -12,11 +12,12 @@ public class StockDbContext : DbContext
    
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
    {
-      optionsBuilder.UseSqlServer("Server=localhost/SQLEXPRESS;Database=master;Trusted_Connection=True;");
+      optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;");
    }
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
       modelBuilder.Entity<Company>().HasNoKey();
+      modelBuilder.Entity<User>().Property(u=>u.Id).ValueGeneratedOnAdd();
    }
 }

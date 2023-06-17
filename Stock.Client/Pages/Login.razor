@@ -3,6 +3,7 @@
 @using global::Stock.Server.Services
 @using global::Stock.Shared.Models
 @inject NavigationManager NavigationManager
+@inject UserService UserService
 <h1>User Page</h1>
  
 @if(!string.IsNullOrEmpty(_message))
@@ -52,14 +53,13 @@ else
 }
 @code 
 {
-    [Inject]
-    private UserService _service {get;set;}
+   
     private string? _username;
     private string? _password;
     private string? _email;
     private string? _message;
     private bool? _showLogin = true;
-    
+
     private async void Log()
     {
         var user = new User()
@@ -71,15 +71,15 @@ else
         if (_username == "ad" && _password == "ad")
         {
             _message = "Login successful";
-            NavigationManager.NavigateTo("/stock");
+            NavigationManager.NavigateTo("/stock",true);
         }
         else
         {
             try
             {
-                await _service.GetUserByCredentials(user);
+                await UserService.GetUserByCredentials(user);
                 _message = "Login successful";
-                NavigationManager.NavigateTo("/stock");
+                NavigationManager.NavigateTo("/stock", true);
             }
             catch (NullReferenceException e)
             {
@@ -88,7 +88,6 @@ else
         }
         
     }
-
     
     private async void Register()
     {
@@ -98,8 +97,16 @@ else
             Password = _password,
             Email = _email
         };
-        
-        Log();
+        if (_username == "ad" || _password == "ad" || _email == "ad@lol.com") 
+            return;
+        try
+        {
+            await UserService.GetUserByCredentials(user);
+        }
+        catch (NullReferenceException e)
+        {
+            _message = "Login Failed";
+        }
         
         if (_message == "Login successful")
         {
@@ -107,7 +114,7 @@ else
         }
         else
         {
-             await _service.AddUser(user);
+            await UserService.AddUser(user);
             _message = "Registration successful";
         }
     }

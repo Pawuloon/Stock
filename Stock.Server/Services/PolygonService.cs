@@ -16,8 +16,10 @@ public class PolygonService : IPolygonService
         {
             var response = await client.GetAsync(url);
             if (!response.IsSuccessStatusCode) 
-                throw new Exception($"Error getting company for {symbol}");
-            
+            {
+                return new Company();
+            }
+
             var content = await response.Content.ReadAsStringAsync();
             var company = JsonSerializer.Deserialize<Company>(content);
             return company;

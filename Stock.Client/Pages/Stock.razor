@@ -1,6 +1,7 @@
 ﻿@page "/stock"
 @using global::Stock.Shared.Models
 @using global::Stock.Server.Services
+@inject PolygonService PolygonService
 <h1>Stock Search</h1>
 
 <div class="search-container">
@@ -32,15 +33,14 @@
 }
 @code 
 {
-    [Inject]
-    private PolygonService _polygonService { get; set; }
+   
     private List<Company>? _filteredCompanies;
     private Company? _selectedCompany;
     private string searchTerm;
 
     protected override async Task OnInitializedAsync()
     {
-        _selectedCompany = await _polygonService.GetCompanyAsync(searchTerm);
+        _selectedCompany = await PolygonService.GetCompanyAsync(searchTerm);
     }
 
     private async void Search()
@@ -51,7 +51,7 @@
         }
         else
         {
-            var companies = await _polygonService.GetCompanyAsync(searchTerm);
+            var companies = await PolygonService.GetCompanyAsync(searchTerm);
             _filteredCompanies = new List<Company> { companies };
         }
     }
@@ -60,7 +60,7 @@
     {
         try
         {
-            var company = await _polygonService.GetCompanyAsync(cName);
+            var company = await PolygonService.GetCompanyAsync(cName);
             _selectedCompany = company;
         }
         catch (Exception e)

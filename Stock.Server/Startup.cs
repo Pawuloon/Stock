@@ -1,4 +1,5 @@
-﻿using Stock.Server.Services;
+﻿using Stock.Server.Data;
+using Stock.Server.Services;
 
 namespace Stock.Server
 {
@@ -9,6 +10,8 @@ namespace Stock.Server
         {
             services.AddRazorPages();
             services.AddScoped<UserService>();
+            services.AddScoped<PolygonService>();
+            services.AddScoped<StockDbContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
