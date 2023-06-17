@@ -12,7 +12,7 @@ public class StockDbContext : DbContext
    
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
    {
-      optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;");
+      optionsBuilder.UseSqlServer("jdbc:jtds:sqlserver://DB-MSSQL16/2019SBD/s24328");
    }
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
