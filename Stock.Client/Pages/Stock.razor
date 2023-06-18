@@ -12,8 +12,8 @@
 </div>
 
 <button class="btn btn-primary" @onclick="Search">Search</button>
-<button class="btn btn-secondary" @onclick="Chart">Chart</button>
-<button class="btn" @onclick="AddToOb">Add to observed</button>
+<button class="btn btn-primary" @onclick="Chart">Chart</button>
+<button class="btn btn-primary" @onclick="AddToOb">+</button>
 @if(_IsLoading)
 {
     <p><em>Loading...</em></p>
@@ -88,11 +88,19 @@ else
         NavigationManager.NavigateTo("/chart",true);
     }
     
-    public async Task AddToOb()
+    private async Task AddToOb()
     {
         if (_company != null)
         {
-            await CompanyService.AddCompany(_company);  
+            try
+            {
+                await CompanyService.AddCompany(_company);  
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+           
         }
     }
 }

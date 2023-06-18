@@ -59,8 +59,7 @@ public class Company
     [JsonPropertyName("symbol")]
     public string Symbol { get; set; }
 
-    [JsonPropertyName("exchangeSymbol")]
-    public string ExchangeSymbol { get; set; }
+   
 
     [JsonPropertyName("hq_address")]
     public string HqAddress { get; set; }
@@ -73,15 +72,6 @@ public class Company
 
     [JsonPropertyName("type")]
     public string Type { get; set; }
-
-    [JsonPropertyName("updated")]
-    public DateTime Updated { get; set; }
-
-    [JsonPropertyName("tags")]
-    public List<string> Tags { get; set; }
-
-    [JsonPropertyName("similar")]
-    public List<string> Similar { get; set; }
 
     [JsonPropertyName("active")]
     public bool Active { get; set; }
