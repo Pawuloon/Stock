@@ -4,9 +4,9 @@ using Stock.Shared.Models;
 
 namespace Stock.Server.Services;
 
-public class UserService : IUserService
+public class UserService : IUserService, IDisposable
 {
-    private StockDbContext _context;
+    private readonly StockDbContext _context;
 
     public UserService(StockDbContext context)
     {
@@ -69,5 +69,10 @@ public class UserService : IUserService
             throw new NullReferenceException();
         }
         return us;
+    }
+
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

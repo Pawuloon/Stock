@@ -5,33 +5,6 @@ using Stock.Server.Controllers;
 using Stock.Server.Data;
 using Stock.Server.Services;
 
-
-// namespace Stock
-// {
-//     public class Program
-//     {
-//         public static async Task Main(string[] args)
-//         {
-//             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-//             builder.RootComponents.Add<App>("app");
-//             
-//             var apiUrl = Environment.GetEnvironmentVariable("API_URL");
-//             
-//             if (string.IsNullOrEmpty(apiUrl))
-//             {
-//                 apiUrl = builder.HostEnvironment.BaseAddress;
-//             }
-//
-//             builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(apiUrl) });
-//
-//             await builder.Build().RunAsync();
-//         }
-//     }
-// }
-
-
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -40,6 +13,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<StockDbContext>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<PolygonService>();
+builder.Services.AddScoped<HttpClient>();
+builder.Services.AddTransient<StockDbContext>();
 
 var app = builder.Build();
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stock.Server.Services;
-using Stock.Shared.Models;
+
 
 namespace Stock.Server.Controllers;
 [Authorize]
@@ -29,7 +29,7 @@ public class CompanyController : ControllerBase
             var company = await _service.GetCompany(id);
             return Ok(company);
         }
-        catch (NullReferenceException e)
+        catch (NullReferenceException)
         {
             return NotFound();
         }
@@ -43,17 +43,17 @@ public class CompanyController : ControllerBase
         {
             await _service.AddCompany(company);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return BadRequest();
         }
-        return CreatedAtAction(nameof(GetCompany), new {id = company.Id}, company);
+        return CreatedAtAction(nameof(GetCompany), new {name = company.Name}, company);
     }
     
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateCompany(int id, [FromBody]Company company)
+    [HttpPut("{name}")]
+    public async Task<IActionResult> UpdateCompany(string name, [FromBody]Company company)
     {
-        if (id != company.Id)
+        if (name != company.Name)
         {
             return BadRequest();
         }
@@ -70,7 +70,7 @@ public class CompanyController : ControllerBase
         {
             await _service.DeleteCompany(id);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return BadRequest();
         }

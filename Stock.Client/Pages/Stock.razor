@@ -1,78 +1,70 @@
 ﻿@page "/stock"
-@using global::Stock.Shared.Models
+
 @using global::Stock.Server.Services
 @inject PolygonService PolygonService
-<h1>Stock Search</h1>
 
-<div class="search-container">
-    <input type="text" placeholder="Search.." @bind="searchTerm" @oninput="Search" />
+<h3>Search Company</h3>
+
+<div class="form-group">
+    <label for="symbolInput">Symbol:</label>
+    <input id="symbolInput" class="form-control" value="@Symbol" @oninput="UpdateSymbol" />
 </div>
 
-@if (_filteredCompanies != null)
+<button class="btn btn-primary" @onclick="Search">Search</button>
+
+@if (Company != null)
 {
-    <div class="search-results">
-        @foreach (var company in _filteredCompanies)
-        {
-            <div class="search-result" @onclick="() => SelectCompany(company)">
-                <p>@company.Name</p>
-            </div>
-        }
-    </div>
+    <h4>Company Information</h4>
+    <p><strong>Logo:</strong> <img src="@Company.Logo" alt="Company Logo" /></p>
+    <p><strong>List Date:</strong> @Company.ListDate.ToString("yyyy-MM-dd")</p>
+    <p><strong>CIK:</strong> @Company.Cik</p>
+    <p><strong>Bloomberg:</strong> @Company.Bloomberg</p>
+    <p><strong>FIGI:</strong> @Company.Figi</p>
+    <p><strong>LEI:</strong> @Company.Lei</p>
+    <p><strong>SIC:</strong> @Company.Sic</p>
+    <p><strong>Country:</strong> @Company.Country</p>
+    <p><strong>Industry:</strong> @Company.Industry</p>
+    <p><strong>Sector:</strong> @Company.Sector</p>
+    <p><strong>Market Cap:</strong> @Company.MarketCap</p>
+    <p><strong>Employees:</strong> @Company.Employees</p>
+    <p><strong>Phone:</strong> @Company.Phone</p>
+    <p><strong>CEO:</strong> @Company.Ceo</p>
+    <p><strong>URL:</strong> <a href="@Company.Url" target="_blank">@Company.Url</a></p>
+    <p><strong>Description:</strong> @Company.Description</p>
+    <p><strong>Exchange:</strong> @Company.Exchange</p>
+    <p><strong>Name:</strong> @Company.Name</p>
+    <p><strong>Symbol:</strong> @Company.Symbol</p>
+    <p><strong>Exchange Symbol:</strong> @Company.ExchangeSymbol</p>
+    <p><strong>HQ Address:</strong> @Company.HqAddress</p>
+    <p><strong>HQ State:</strong> @Company.HqState</p>
+    <p><strong>HQ Country:</strong> @Company.HqCountry</p>
+    <p><strong>Type:</strong> @Company.Type</p>
+    <p><strong>Updated:</strong> @Company.Updated.ToString("MM/dd/yyyy")</p>
+    <p><strong>Active:</strong> @Company.Active</p>
+}
+else
+{
+    <p>No company found.</p>
 }
 
-@if (_selectedCompany != null)
-{
-    <h2>Name: @_selectedCompany.Name</h2>
+@code {
+    private string Symbol;
+    private Company? Company;
 
-    <p>Symbol: @_selectedCompany.Symbol</p>
-    <p>Description: @_selectedCompany.Description</p>
-    <p>Ceo: @_selectedCompany.Ceo</p>
-    <p>Industry: @_selectedCompany.Industry</p>
-
- 
-}
-@code 
-{
-   
-    private List<Company>? _filteredCompanies;
-    private Company? _selectedCompany;
-    private string searchTerm;
-
-    protected override async Task OnInitializedAsync()
+    private void UpdateSymbol(ChangeEventArgs e)
     {
-        _selectedCompany = await PolygonService.GetCompanyAsync(searchTerm);
+        Symbol = e.Value.ToString();
     }
 
-    private async void Search()
-    {
-        if (string.IsNullOrEmpty(searchTerm))
-        {
-            _filteredCompanies = null;
-        }
-        else
-        {
-            var companies = await PolygonService.GetCompanyAsync(searchTerm);
-            _filteredCompanies = new List<Company> { companies };
-        }
-    }
-
-    private async Task LoadCompany(string cName)
+    private async Task Search()
     {
         try
         {
-            var company = await PolygonService.GetCompanyAsync(cName);
-            _selectedCompany = company;
+            Company = await PolygonService.GetCompanyAsync(Symbol);
         }
-        catch (Exception e)
+        catch
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Company = null;
         }
-    }
-
-    private async void SelectCompany(Company company)
-    {
-        _selectedCompany = company;
-        if (_selectedCompany != null)
-            await LoadCompany(company.Name);
     }
 }

@@ -27,7 +27,7 @@ public class UserController : ControllerBase
             var user = await _service.GetUser(id);
             return Ok(user);
         }
-        catch (NullReferenceException e)
+        catch (NullReferenceException)
         {
             return NotFound();
         }
@@ -42,7 +42,7 @@ public class UserController : ControllerBase
         {
             await _service.AddUser(user);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return BadRequest();
         }
@@ -68,7 +68,7 @@ public class UserController : ControllerBase
         {
             await _service.DeleteUser(id);
         }
-        catch (NullReferenceException e)
+        catch (NullReferenceException)
         {
             return NotFound();
         }
@@ -84,7 +84,7 @@ public class UserController : ControllerBase
             var userFromDb = await _service.GetUserByCredentials(user);
             return Ok(userFromDb);
         }
-        catch (NullReferenceException e)
+        catch (NullReferenceException)
         {
             return null;
         }

@@ -12,7 +12,7 @@ public class StockDbContext : DbContext
    
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
    {
-      optionsBuilder.UseSqlServer("jdbc:jtds:sqlserver://DB-MSSQL16/2019SBD/s24328");
+      optionsBuilder.UseSqlServer("Data Source=db-mssql16;Initial Catalog=s24328;Integrated Security=True");
    }
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
