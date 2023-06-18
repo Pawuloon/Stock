@@ -13,6 +13,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<StockDbContext>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<PolygonService>();
+builder.Services.AddScoped<CompanyService>();
 builder.Services.AddScoped<HttpClient>();
 builder.Services.AddTransient<StockDbContext>();
 

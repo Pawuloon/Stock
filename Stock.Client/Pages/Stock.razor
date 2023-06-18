@@ -1,8 +1,9 @@
 ﻿@page "/stock"
 
 @using global::Stock.Server.Services
+@inject  NavigationManager NavigationManager
 @inject PolygonService PolygonService
-
+@inject CompanyService CompanyService
 <h3>Search Company</h3>
 
 <div class="form-group">
@@ -11,35 +12,37 @@
 </div>
 
 <button class="btn btn-primary" @onclick="Search">Search</button>
+<button class="btn btn-secondary" @onclick="Chart">Chart</button>
+<button class="btn" @onclick="AddToOb">Add to observed</button>
 @if(_IsLoading)
 {
     <p><em>Loading...</em></p>
 }
-@if (Company != null)
+@if (_company != null)
 {
     <h4>Company Information</h4>
-    <p><strong>Logo:</strong> <img src="@Company.Logo" alt="Company Logo" /></p>
-    <p><strong>List Date:</strong> @Company.ListDate.ToString("yyyy-MM-dd")</p>
-    <p><strong>CIK:</strong> @Company.Cik</p>
-    <p><strong>Bloomberg:</strong> @Company.Bloomberg</p>
-    <p><strong>SIC:</strong> @Company.Sic</p>
-    <p><strong>Country:</strong> @Company.Country</p>
-    <p><strong>Industry:</strong> @Company.Industry</p>
-    <p><strong>Sector:</strong> @Company.Sector</p>
-    <p><strong>Market Cap:</strong> @Company.MarketCap</p>
-    <p><strong>Employees:</strong> @Company.Employees</p>
-    <p><strong>Phone:</strong> @Company.Phone</p>
-    <p><strong>CEO:</strong> @Company.Ceo</p>
-    <p><strong>URL:</strong> <a href="@Company.Url" target="_blank">@Company.Url</a></p>
-    <p><strong>Description:</strong> @Company.Description</p>
-    <p><strong>Exchange:</strong> @Company.Exchange</p>
-    <p><strong>Name:</strong> @Company.Name</p>
-    <p><strong>Symbol:</strong> @Company.Symbol</p>
-    <p><strong>HQ Address:</strong> @Company.HqAddress</p>
-    <p><strong>HQ State:</strong> @Company.HqState</p>
-    <p><strong>HQ Country:</strong> @Company.HqCountry</p>
-    <p><strong>Type:</strong> @Company.Type</p>
-    <p><strong>Active:</strong> @Company.Active</p>
+    <p><strong>Logo:</strong> <img src="@_company.Logo" alt="Company Logo" /></p>
+    <p><strong>List Date:</strong> @_company.ListDate.ToString("yyyy-MM-dd")</p>
+    <p><strong>CIK:</strong> @_company.Cik</p>
+    <p><strong>Bloomberg:</strong> @_company.Bloomberg</p>
+    <p><strong>SIC:</strong> @_company.Sic</p>
+    <p><strong>Country:</strong> @_company.Country</p>
+    <p><strong>Industry:</strong> @_company.Industry</p>
+    <p><strong>Sector:</strong> @_company.Sector</p>
+    <p><strong>Market Cap:</strong> @_company.MarketCap</p>
+    <p><strong>Employees:</strong> @_company.Employees</p>
+    <p><strong>Phone:</strong> @_company.Phone</p>
+    <p><strong>CEO:</strong> @_company.Ceo</p>
+    <p><strong>URL:</strong> <a href="@_company.Url" target="_blank">@_company.Url</a></p>
+    <p><strong>Description:</strong> @_company.Description</p>
+    <p><strong>Exchange:</strong> @_company.Exchange</p>
+    <p><strong>Name:</strong> @_company.Name</p>
+    <p><strong>Symbol:</strong> @_company.Symbol</p>
+    <p><strong>HQ Address:</strong> @_company.HqAddress</p>
+    <p><strong>HQ State:</strong> @_company.HqState</p>
+    <p><strong>HQ Country:</strong> @_company.HqCountry</p>
+    <p><strong>Type:</strong> @_company.Type</p>
+    <p><strong>Active:</strong> @_company.Active</p>
   
                                                  
 }
@@ -50,7 +53,7 @@ else
 
 @code {
     private string Symbol;
-    private Company? Company;
+    private Company? _company;
     private bool _IsLoading;
 
     private void UpdateSymbol(ChangeEventArgs e)
@@ -66,17 +69,30 @@ else
             var companyData = await PolygonService.GetCompanyAsync(Symbol);
             if (companyData != null)
             {
-                Company = companyData;
+                _company = companyData;
             }
             else
             {
-                Company = null; 
+                _company = null; 
             }
         }
         catch
         {
-            Company = null; 
+            _company = null; 
         }
         _IsLoading = false;
+    }
+
+    private void Chart()
+    {
+        NavigationManager.NavigateTo("/chart",true);
+    }
+    
+    public async Task AddToOb()
+    {
+        if (_company != null)
+        {
+            await CompanyService.AddCompany(_company);  
+        }
     }
 }
