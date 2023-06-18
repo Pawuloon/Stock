@@ -45,9 +45,14 @@ public class PolygonService : IPolygonService
             Ceo = retg.RootElement.GetProperty("ceo").GetString(),
             Url = retg.RootElement.GetProperty("url").GetString(),
             Description = retg.RootElement.GetProperty("description").GetString(),
-            Exchange = retg.RootElement.GetProperty("exchange").GetString(),
-            Tags = retg.RootElement.GetProperty("tags").EnumerateArray().Select(x => x.GetString()).ToList()
-            
+            Exchange = retg.RootElement.GetProperty("exchangeSymbol").GetString(),
+            Tags = retg.RootElement.GetProperty("tags").EnumerateArray().Select(x => x.GetString()).ToList(),
+            HqState = retg.RootElement.GetProperty("hq_state").GetString(),
+            HqCountry = retg.RootElement.GetProperty("hq_country").GetString(),
+            HqAddress = retg.RootElement.GetProperty("hq_address").GetString(),
+            Type = retg.RootElement.GetProperty("type").GetString(),
+            Active = retg.RootElement.GetProperty("active").GetBoolean(),
+           
         };
         
         
