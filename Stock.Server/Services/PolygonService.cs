@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 
 namespace Stock.Server.Services;
 
@@ -18,46 +19,39 @@ public class PolygonService : IPolygonService
         var apiKey = "wLLws_fgOA0rv8cB_toGfvdBCpcd1yCj";
         var url = $"https://api.polygon.io/v1/meta/symbols/{symbol.ToUpper()}/company?apiKey={apiKey}";
         var response = await _httpClient.GetAsync(url);
+        
         if (!response.IsSuccessStatusCode)
         {
             return null;
         }
+
         var content = await response.Content.ReadAsStringAsync();
-        var companyData = JsonSerializer.Deserialize<Company>(content);
-        
-        var company = new Company
+        var retg = JsonSerializer.Deserialize<JsonDocument>(content);
+        var comp = new Company()
         {
-            Name = companyData.Name,
-            Symbol = companyData.Symbol,
-            Exchange = companyData.Exchange,
-            Industry = companyData.Industry,
-            ListDate = companyData.ListDate,
-            Cik = companyData.Cik,
-            Country = companyData.Country,
-            Bloomberg = companyData.Bloomberg,
-            Figi = companyData.Figi,
-            Lei = companyData.Lei,
-            Sic = companyData.Sic,
-            Sector = companyData.Sector,
-            MarketCap = companyData.MarketCap,
-            Employees = companyData.Employees,
-            Phone = companyData.Phone,
-            Ceo = companyData.Ceo,
-            Url = companyData.Url,
-            Description = companyData.Description,
-            ExchangeSymbol = companyData.ExchangeSymbol,
-            HqAddress = companyData.HqAddress,
-            HqState = companyData.HqState,
-            HqCountry = companyData.HqCountry,
-            Type = companyData.Type,
-            Updated = companyData.Updated,
-            Tags = companyData.Tags,
-            Similar = companyData.Similar,
-            Active = companyData.Active
+            Name = retg.RootElement.GetProperty("name").GetString(),
+            Symbol = retg.RootElement.GetProperty("symbol").GetString(),
+            Logo = retg.RootElement.GetProperty("logo").GetString(),
+            ListDate = retg.RootElement.GetProperty("listdate").GetDateTime(),
+            Cik = retg.RootElement.GetProperty("cik").GetString(),
+            Bloomberg = retg.RootElement.GetProperty("bloomberg").GetString(),
+            Sic = retg.RootElement.GetProperty("sic").GetInt32(),
+            Country = retg.RootElement.GetProperty("country").GetString(),
+            Industry = retg.RootElement.GetProperty("industry").GetString(),
+            Sector = retg.RootElement.GetProperty("sector").GetString(),
+            MarketCap = retg.RootElement.GetProperty("marketcap").GetDecimal(),
+            Employees = retg.RootElement.GetProperty("employees").GetInt32(),
+            Phone = retg.RootElement.GetProperty("phone").GetString(),
+            Ceo = retg.RootElement.GetProperty("ceo").GetString(),
+            Url = retg.RootElement.GetProperty("url").GetString(),
+            Description = retg.RootElement.GetProperty("description").GetString(),
+            Exchange = retg.RootElement.GetProperty("exchange").GetString(),
+            Tags = retg.RootElement.GetProperty("tags").EnumerateArray().Select(x => x.GetString()).ToList()
             
-        
         };
-        return company;
+        
+        
+        return comp;
 
     }
 }

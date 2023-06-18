@@ -11,7 +11,10 @@
 </div>
 
 <button class="btn btn-primary" @onclick="Search">Search</button>
-
+@if(_IsLoading)
+{
+    <p><em>Loading...</em></p>
+}
 @if (Company != null)
 {
     <h4>Company Information</h4>
@@ -19,8 +22,6 @@
     <p><strong>List Date:</strong> @Company.ListDate.ToString("yyyy-MM-dd")</p>
     <p><strong>CIK:</strong> @Company.Cik</p>
     <p><strong>Bloomberg:</strong> @Company.Bloomberg</p>
-    <p><strong>FIGI:</strong> @Company.Figi</p>
-    <p><strong>LEI:</strong> @Company.Lei</p>
     <p><strong>SIC:</strong> @Company.Sic</p>
     <p><strong>Country:</strong> @Company.Country</p>
     <p><strong>Industry:</strong> @Company.Industry</p>
@@ -50,6 +51,7 @@ else
 @code {
     private string Symbol;
     private Company? Company;
+    private bool _IsLoading;
 
     private void UpdateSymbol(ChangeEventArgs e)
     {
@@ -58,13 +60,23 @@ else
 
     private async Task Search()
     {
+        _IsLoading = true;
         try
         {
-            Company = await PolygonService.GetCompanyAsync(Symbol);
+            var companyData = await PolygonService.GetCompanyAsync(Symbol);
+            if (companyData != null)
+            {
+                Company = companyData;
+            }
+            else
+            {
+                Company = null; 
+            }
         }
         catch
         {
-            Company = null;
+            Company = null; 
         }
+        _IsLoading = false;
     }
 }

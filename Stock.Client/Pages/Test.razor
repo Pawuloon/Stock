@@ -1,46 +1,46 @@
-﻿@page "/test"
-
-@using global::Stock.Server.Services
-@inject PolygonService PolygonService
-
-<h3>Search Company</h3>
-
-<div class="form-group">
-    <label for="symbolInput">Symbol:</label>
-    <input id="symbolInput" class="form-control" value="@Symbol" @oninput="UpdateSymbol" />
-</div>
-
-<button class="btn btn-primary" @onclick="Search">Search</button>
-
-@if (Company != null)
-{
-    <h4>Company Information</h4>
-    <p><strong>Founded:</strong> @Company</p>
-}
-else
-{
-    <p>No company found.</p>
-}
-
-@code {
-    private string Symbol;
-    private string Company;
-
-    private void UpdateSymbol(ChangeEventArgs e)
-    {
-        Symbol = e.Value.ToString();
-    }
-
-    private async Task Search()
-    {
-        try
-        {
-            var company = await PolygonService.GetCompanyAsync(Symbol);
-            Company = company.Name;
-        }
-        catch
-        {
-            Company = string.Empty;
-        }
-    }
-}
+﻿@* @page "/test" *@
+@* *@
+@* @using global::Stock.Server.Services *@
+@* @inject PolygonService PolygonService *@
+@* *@
+@* <h3>Search Company</h3> *@
+@* *@
+@* <div class="form-group"> *@
+@*     <label for="symbolInput">Symbol:</label> *@
+@*     <input id="symbolInput" class="form-control" value="@Symbol" @oninput="UpdateSymbol" /> *@
+@* </div> *@
+@* *@
+@* <button class="btn btn-primary" @onclick="Search">Search</button> *@
+@* *@
+@* @if (Company != null) *@
+@* { *@
+@*     <h4>Company Information</h4> *@
+@*     <p><strong>Founded:</strong> @Company</p> *@
+@* } *@
+@* else *@
+@* { *@
+@*     <p>No company found.</p> *@
+@* } *@
+@* *@
+@* @code { *@
+@*     private string Symbol; *@
+@*     private string Company; *@
+@* *@
+@*     private void UpdateSymbol(ChangeEventArgs e) *@
+@*     { *@
+@*         Symbol = e.Value.ToString(); *@
+@*     } *@
+@* *@
+@*     private async Task Search() *@
+@*     { *@
+@*         try *@
+@*         { *@
+@*             var company = await PolygonService.GetCompanyAsync(Symbol); *@
+@*             Company = company.Name; *@
+@*         } *@
+@*         catch *@
+@*         { *@
+@*             Company = string.Empty; *@
+@*         } *@
+@*     } *@
+@* } *@

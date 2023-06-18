@@ -1,4 +1,5 @@
-﻿using Stock.Shared.Models;
+﻿using System.Text.Json;
+using Stock.Shared.Models;
 
 namespace Stock.Server.Services;
 
