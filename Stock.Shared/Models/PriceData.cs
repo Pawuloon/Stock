@@ -4,9 +4,6 @@ namespace Stock.Shared.Models;
 
 public class PriceData
 {
-    [Key]
-    public int Id { get; set; }
-    
     
     public string? Symbol {get; set;}
     

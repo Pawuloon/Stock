@@ -1,5 +1,6 @@
 ﻿
 using System.Text.Json;
+using Stock.Shared.Models;
 
 namespace Stock.Server.Services;
 
@@ -8,6 +9,7 @@ public class PolygonService : IPolygonService
 
   
     private readonly HttpClient _httpClient;
+    private const string ApiKey = "wLLws_fgOA0rv8cB_toGfvdBCpcd1yCj";
 
     public PolygonService(HttpClient httpClient)
     {
@@ -16,8 +18,7 @@ public class PolygonService : IPolygonService
 
     public async Task<Company> GetCompanyAsync(string symbol)
     {
-        var apiKey = "wLLws_fgOA0rv8cB_toGfvdBCpcd1yCj";
-        var url = $"https://api.polygon.io/v1/meta/symbols/{symbol.ToUpper()}/company?apiKey={apiKey}";
+        var url = $"https://api.polygon.io/v1/meta/symbols/{symbol.ToUpper()}/company?apiKey={ApiKey}";
         var response = await _httpClient.GetAsync(url);
         
         if (!response.IsSuccessStatusCode)
@@ -57,5 +58,42 @@ public class PolygonService : IPolygonService
         
         return comp;
 
+    }
+    
+    
+    public async Task<List<PriceData>>GetDataAsync(string symbol, DateTime from, DateTime to)
+    {
+        var url = $"https://api.polygon.io/v2/aggs/ticker/{symbol}/range/1/day/{from:yyyy-MM-dd}/{to:yyyy-MM-dd}?apiKey={ApiKey}";
+        
+        var response = await _httpClient.GetAsync(url);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+        
+        var content = await response.Content.ReadAsStringAsync();
+        
+        var data = JsonDocument.Parse(content).RootElement.GetProperty("results");
+
+        var companyPrices = new List<PriceData>();
+
+        foreach (var x in data.EnumerateArray())
+        {
+            var date = x.GetProperty("t").GetDateTime();
+            var open = x.GetProperty("o").GetDecimal();
+            var high = x.GetProperty("h").GetDecimal();
+            var low = x.GetProperty("l").GetDecimal();
+            var close = x.GetProperty("c").GetDecimal();
+            companyPrices.Add(new PriceData()
+            {
+                From = date,
+                Open = open,
+                High = high,
+                Low = low,
+                Close = close,
+            });
+        }
+        return companyPrices;
     }
 }

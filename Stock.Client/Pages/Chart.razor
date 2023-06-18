@@ -1,5 +1,20 @@
 ﻿@page "/chart"
 @using Microsoft.AspNetCore.Components.Web
+@using ChartJs.Blazor.ChartJS.Common.Properties
+@using ChartJs.Blazor.ChartJS.LineChart
 
 <h3>Stock Chart</h3>
+
+<LineChart Config="@_CharConfig" WIDTH="600" HEIGHT="400" />
+
+@code
+{
+   private LineConfig _CharConfig;
+
+   protected override void OnInitialized()
+   {
+      
+   }
+    
+}
 

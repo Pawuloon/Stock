@@ -46,16 +46,21 @@
   
                                                  
 }
-else
+else if (_company == null && !_IsLoading)
 {
     <p>No company found.</p>
 }
 
-@code {
-    private string Symbol;
-    private Company? _company;
-    private bool _IsLoading;
 
+
+@code 
+{
+    
+  
+    public Company? _company;
+    private string Symbol;
+    private bool _IsLoading;
+    
     private void UpdateSymbol(ChangeEventArgs e)
     {
         Symbol = e.Value.ToString();
@@ -83,11 +88,11 @@ else
         _IsLoading = false;
     }
 
+
     private void Chart()
     {
-        NavigationManager.NavigateTo("/chart",true);
+         NavigationManager.NavigateTo("/chart");
     }
-    
     private async Task AddToOb()
     {
         if (_company != null)
