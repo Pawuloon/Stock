@@ -228,7 +228,7 @@ namespace Stock.Server.Migrations
 
             modelBuilder.Entity("Stock.Shared.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 

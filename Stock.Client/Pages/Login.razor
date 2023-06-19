@@ -80,9 +80,10 @@ else
                 _message = "Login successful";
                 NavigationManager.NavigateTo("/stock", true);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                _message = "Login Failed";
+                Console.WriteLine(e);
+                NavigationManager.NavigateTo("/stock", true);
             }
         }
     }
@@ -91,6 +92,7 @@ else
     {
         var user = new User()
         {
+            Id = 0,
             UserName = _username,
             Password = _password,
             Email = _email
@@ -101,13 +103,14 @@ else
 
         try
         {
-            await UserService.GetUserByCredentials(user);
-            _message = "User already exists";
-        }
-        catch (NullReferenceException)
-        {
             await UserService.AddUser(user);
             _message = "Registration successful";
+            _showLogin = true;
+        }
+        catch (Exception)
+        {
+            _message = "User already exists";
+            _showLogin = true;
         }
     }
 }

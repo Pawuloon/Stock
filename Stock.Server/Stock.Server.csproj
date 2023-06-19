@@ -48,4 +48,8 @@
       <None Remove="Data\Migrations\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
 </Project>
