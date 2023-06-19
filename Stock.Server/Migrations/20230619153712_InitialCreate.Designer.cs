@@ -12,8 +12,8 @@ using Stock.Server.Data;
 namespace Stock.Server.Migrations
 {
     [DbContext(typeof(StockDbContext))]
-    [Migration("20230615143312_Data")]
-    partial class Data
+    [Migration("20230619153712_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,82 +25,126 @@ namespace Stock.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Stock.Shared.Models.Company", b =>
+            modelBuilder.Entity("Company", b =>
                 {
-                    b.Property<bool?>("Active")
-                        .HasColumnType("bit");
+                    b.Property<string>("Symbol")
+                        .HasColumnType("nvarchar(450)")
+                        .HasAnnotation("Relational:JsonPropertyName", "symbol");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasAnnotation("Relational:JsonPropertyName", "active");
 
                     b.Property<string>("Bloomberg")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "bloomberg");
 
                     b.Property<string>("Ceo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "ceo");
 
-                    b.Property<int?>("Cik")
-                        .HasColumnType("int");
+                    b.Property<string>("Cik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "cik");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "country");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "description");
 
-                    b.Property<int?>("Employees")
-                        .HasColumnType("int");
+                    b.Property<int>("Employees")
+                        .HasColumnType("int")
+                        .HasAnnotation("Relational:JsonPropertyName", "employees");
 
-                    b.Property<string>("ExchangeSymbol")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Exchange")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "exchange");
 
-                    b.Property<int>("Figi")
-                        .HasColumnType("int");
+                    b.Property<string>("Figi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "figi");
 
                     b.Property<string>("HqAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "hq_address");
+
+                    b.Property<string>("HqCountry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "hq_country");
 
                     b.Property<string>("HqState")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "hq_state");
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Industry")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "industry");
 
-                    b.Property<int>("Lei")
-                        .HasColumnType("int");
+                    b.Property<string>("Lei")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "lei");
 
-                    b.Property<DateTime?>("ListDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("ListDate")
+                        .HasColumnType("datetime2")
+                        .HasAnnotation("Relational:JsonPropertyName", "listdate");
 
                     b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "logo");
 
-                    b.Property<decimal?>("MarketCap")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<decimal>("MarketCap")
+                        .HasColumnType("decimal(18,2)")
+                        .HasAnnotation("Relational:JsonPropertyName", "marketcap");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "name");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "phone");
 
                     b.Property<string>("Sector")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "sector");
 
-                    b.Property<string>("Similar")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Sic")
+                        .HasColumnType("int")
+                        .HasAnnotation("Relational:JsonPropertyName", "sic");
 
-                    b.Property<string>("Symbol")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tags")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ticker")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "type");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "url");
+
+                    b.HasKey("Symbol");
 
                     b.ToTable("Companies");
                 });
@@ -194,9 +238,11 @@ namespace Stock.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

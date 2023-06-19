@@ -12,12 +12,13 @@ public class StockDbContext : DbContext
    
    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
    {
-      optionsBuilder.UseSqlServer("Data Source=db-mssql16;Initial Catalog=s24328;Integrated Security=True;TrustServerCertificate=true;");
+      optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;TrustServerCertificate=true;");
    }
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
       modelBuilder.Entity<Company>().HasKey(c => c.Symbol);
       modelBuilder.Entity<User>().Property(u=>u.Id).ValueGeneratedOnAdd();
+      modelBuilder.Entity<PriceData>().Property(p => p.Id).ValueGeneratedOnAdd();
    }
 }

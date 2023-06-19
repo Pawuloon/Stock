@@ -2,6 +2,7 @@
 
 public class Company
 {
+    public int Id { get; set; }
     [JsonPropertyName("logo")]
     public string Logo { get; set; }
 

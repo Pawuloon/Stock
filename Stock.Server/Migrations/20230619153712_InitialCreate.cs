@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Stock.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class Data : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,34 +15,35 @@ namespace Stock.Server.Migrations
                 name: "Companies",
                 columns: table => new
                 {
+                    Symbol = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ticker = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ListDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Industry = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Sector = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MarketCap = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Employees = table.Column<int>(type: "int", nullable: true),
-                    Ceo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Symbol = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExchangeSymbol = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HqAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HqState = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Active = table.Column<bool>(type: "bit", nullable: true),
-                    Cik = table.Column<int>(type: "int", nullable: true),
-                    Bloomberg = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lei = table.Column<int>(type: "int", nullable: false),
-                    Figi = table.Column<int>(type: "int", nullable: false),
-                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Similar = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ListDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Cik = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bloomberg = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Figi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Lei = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sic = table.Column<int>(type: "int", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Industry = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sector = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MarketCap = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Employees = table.Column<int>(type: "int", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ceo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Exchange = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HqAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HqState = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HqCountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_Companies", x => x.Symbol);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,8 +93,8 @@ namespace Stock.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

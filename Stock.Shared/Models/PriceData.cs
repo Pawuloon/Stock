@@ -4,7 +4,7 @@ namespace Stock.Shared.Models;
 
 public class PriceData
 {
-    
+    public int Id { get; set; }
     public string? Symbol {get; set;}
     
     public bool Status { get; set; }

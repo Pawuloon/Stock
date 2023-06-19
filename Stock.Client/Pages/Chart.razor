@@ -20,37 +20,37 @@
 </div>
 
 // TODO Fix the chart
-@if(_company != null)
-{
-   <div class="chart-container">
-      <SfChart>
-         <ChartTitle Text="@_company.Name"></ChartTitle>
-         // Error here
-         <ChartPrimaryXAxis>
-            <DateTimeAxis
-               ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime"
-               IntervalType="Syncfusion.Blazor.Charts.DateTimeIntervalType.Months"
-               LabelFormat="MM"
-            ></DateTimeAxis>
-         </ChartPrimaryXAxis>
-         <ChartPrimaryYAxis>
-            <NumericAxis Title="Price"></NumericAxis>
-         </ChartPrimaryYAxis>
-         <ChartSeriesCollection>
-            <HiloOpenCloseSeries
-               DataSource="@_datas"
-               XName="Date"
-               High="High"
-               Low="Low"
-               Open="Open"
-               Close="Close"
-               Name="Price">
-            </HiloOpenCloseSeries>
-         </ChartSeriesCollection>
-            
-      </SfChart>
-   </div>
-}
+@* @if(_company != null) *@
+@* { *@
+@*    <div class="chart-container"> *@
+@*       <SfChart> *@
+@*          <ChartTitle Text="@_company.Name"></ChartTitle> *@
+@*          // Error here *@
+@*          <ChartPrimaryXAxis> *@
+@*             <DateTimeAxis *@
+@*                ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" *@
+@*                IntervalType="Syncfusion.Blazor.Charts.DateTimeIntervalType.Months" *@
+@*                LabelFormat="MM" *@
+@*             ></DateTimeAxis> *@
+@*          </ChartPrimaryXAxis> *@
+@*          <ChartPrimaryYAxis> *@
+@*             <NumericAxis Title="Price"></NumericAxis> *@
+@*          </ChartPrimaryYAxis> *@
+@*          <ChartSeriesCollection> *@
+@*             <HiloOpenCloseSeries *@
+@*                DataSource="@_datas" *@
+@*                XName="Date" *@
+@*                High="High" *@
+@*                Low="Low" *@
+@*                Open="Open" *@
+@*                Close="Close" *@
+@*                Name="Price"> *@
+@*             </HiloOpenCloseSeries> *@
+@*          </ChartSeriesCollection> *@
+@*              *@
+@*       </SfChart> *@
+@*    </div> *@
+@* } *@
 @code
 {
 
