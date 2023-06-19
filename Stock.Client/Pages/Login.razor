@@ -80,9 +80,8 @@ else
                 _message = "Login successful";
                 NavigationManager.NavigateTo("/stock", true);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
                 NavigationManager.NavigateTo("/stock", true);
             }
         }
@@ -109,7 +108,6 @@ else
         }
         catch (Exception)
         {
-            _message = "User already exists";
             _showLogin = true;
         }
     }

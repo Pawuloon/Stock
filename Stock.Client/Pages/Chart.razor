@@ -1,56 +1,47 @@
 ﻿@page "/chart"
-@using global::Stock.Shared.Models
-@using global::Stock.Server.Services
-@using Microsoft.EntityFrameworkCore.Storage.ValueConversion
-@using Syncfusion.Blazor.Charts
+
 @inject PolygonService PolygonService
+@inject NavigationManager NavigationManager
 <h3>Stock Chart</h3>
 
-<div class="search-container">
+<div>
    <input type="text" @bind="_searchSign"/>
    <button type="button" @onclick="Select">Confirm</button>
 </div>
 
-<div class="date-container">
+<div>
    <label for="_fromDate">From</label>
    <input type="date" id="_fromDate" @bind="_fromDate"/>
    <label for="_toDate">To</label>
-   <input type="date" id="_toDate" @bind="_toDate"/>
+   <input type="date" id="_toDate" @bind="_toDate" />
    <button type="button" @onclick="Update">Update</button>
 </div>
 
+<div>
+   <button type ="button" @onclick="Back">Back</button>
+</div>
+
 // TODO Fix the chart
-@* @if(_company != null) *@
-@* { *@
-@*    <div class="chart-container"> *@
-@*       <SfChart> *@
-@*          <ChartTitle Text="@_company.Name"></ChartTitle> *@
-@*          // Error here *@
-@*          <ChartPrimaryXAxis> *@
-@*             <DateTimeAxis *@
-@*                ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" *@
-@*                IntervalType="Syncfusion.Blazor.Charts.DateTimeIntervalType.Months" *@
-@*                LabelFormat="MM" *@
-@*             ></DateTimeAxis> *@
-@*          </ChartPrimaryXAxis> *@
-@*          <ChartPrimaryYAxis> *@
-@*             <NumericAxis Title="Price"></NumericAxis> *@
-@*          </ChartPrimaryYAxis> *@
-@*          <ChartSeriesCollection> *@
-@*             <HiloOpenCloseSeries *@
-@*                DataSource="@_datas" *@
-@*                XName="Date" *@
-@*                High="High" *@
-@*                Low="Low" *@
-@*                Open="Open" *@
-@*                Close="Close" *@
-@*                Name="Price"> *@
-@*             </HiloOpenCloseSeries> *@
-@*          </ChartSeriesCollection> *@
-@*              *@
-@*       </SfChart> *@
-@*    </div> *@
-@* } *@
+@if(_company != null)
+{
+   <div>
+      <SfStockChart>
+          <StockChartTitle Text="@_company.Name"></StockChartTitle>
+          <StockChartPrimaryXAxis>
+              <DateTimeAxis ValueType="ChartValueType.DateTime" IntervalType="DateTimeIntervalType.Months" LabelFormat="MM"></DateTimeAxis>
+          </StockChartPrimaryXAxis>
+          <StockChartPrimaryYAxis>
+              <NumericAxis Title="Price"></NumericAxis>
+          </StockChartPrimaryYAxis>
+          <StockChartSeries>
+              <HiloOpenCloseSeries DataSource="@_datas" XName="Date" High="High" Low="Low" Open="Open" Close="Close" Name="Price">
+              </HiloOpenCloseSeries>
+          </StockChartSeries>
+      </SfStockChart>
+
+      
+   </div>
+}
 @code
 {
 
@@ -71,7 +62,10 @@
          _datas = await PolygonService.GetDataAsync(_searchSign,_fromDate,_toDate);
       }
    }
-
+   private void Back()
+   {
+      NavigationManager.NavigateTo("/stock",true);
+   }
    private async Task Update()
    {
       if(_company != null)

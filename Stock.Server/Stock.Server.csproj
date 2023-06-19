@@ -23,7 +23,6 @@
         <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="7.0.7" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
         <PackageReference Include="Syncfusion.Blazor" Version="21.2.10" />
-        <PackageReference Include="Syncfusion.Blazor.Charts" Version="21.2.10" />
         <PackageReference Include="Syncfusion.Blazor.Core" Version="21.2.10" />
         <PackageReference Include="Syncfusion.Blazor.Data" Version="21.2.10" />
     </ItemGroup>
@@ -34,22 +33,22 @@
 
     <ItemGroup>
       <Compile Remove="Data\Migrations\**" />
+      <Compile Remove="Migrations\**" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="Data\Migrations\**" />
+      <EmbeddedResource Remove="Migrations\**" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Remove="Data\Migrations\**" />
+      <Content Remove="Migrations\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Data\Migrations\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Migrations\" />
+      <None Remove="Migrations\**" />
     </ItemGroup>
 
 </Project>

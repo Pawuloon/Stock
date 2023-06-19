@@ -4,7 +4,7 @@ using Stock.Shared.Models;
 
 namespace Stock.Server.Services;
 
-public class UserService : IUserService, IDisposable
+public class UserService : IUserService
 {
     private readonly StockDbContext _context;
 
@@ -71,8 +71,5 @@ public class UserService : IUserService, IDisposable
         return us;
     }
 
-    public void Dispose()
-    {
-        _context.Dispose();
-    }
+  
 }

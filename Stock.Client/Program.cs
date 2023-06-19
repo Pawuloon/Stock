@@ -4,6 +4,7 @@ using Stock.Server;
 using Stock.Server.Controllers;
 using Stock.Server.Data;
 using Stock.Server.Services;
+using Syncfusion.Blazor.Charts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddScoped<PolygonService>();
 builder.Services.AddScoped<CompanyService>();
 builder.Services.AddScoped<HttpClient>();
 builder.Services.AddTransient<StockDbContext>();
+builder.Services.AddScoped<SfStockChart>();
 
 var app = builder.Build();
 

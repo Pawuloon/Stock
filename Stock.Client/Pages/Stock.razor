@@ -1,19 +1,29 @@
 ﻿@page "/stock"
 
-@using global::Stock.Server.Services
+
 @inject  NavigationManager NavigationManager
 @inject PolygonService PolygonService
 @inject CompanyService CompanyService
-<h3>Search Company</h3>
+<div>
+    <h3>Search Company</h3>
+    <button class="btn btn-primary" @onclick="LogOut">Log out</button>
+</div>
 
 <div class="form-group">
     <label for="symbolInput">Symbol:</label>
     <input id="symbolInput" class="form-control" value="@Symbol" @oninput="UpdateSymbol" />
 </div>
+<div>
+    <button class="btn btn-primary" @onclick="Search">Search</button>
+    <button class="btn btn-primary" @onclick="Chart">Chart</button>
+    <button class="btn btn-primary" @onclick="AddToOb">+</button>
+</div>
 
-<button class="btn btn-primary" @onclick="Search">Search</button>
-<button class="btn btn-primary" @onclick="Chart">Chart</button>
-<button class="btn btn-primary" @onclick="AddToOb">+</button>
+
+@if (_added)
+{
+    <p>@_company.Name has been added to watched</p>
+}
 @if(_IsLoading)
 {
     <p><em>Loading...</em></p>
@@ -53,6 +63,9 @@ else if (_company == null && !_IsLoading)
 
 
 
+
+
+
 @code 
 {
     
@@ -60,6 +73,7 @@ else if (_company == null && !_IsLoading)
     public Company? _company;
     private string Symbol;
     private bool _IsLoading;
+    private bool _added;
     
     private void UpdateSymbol(ChangeEventArgs e)
     {
@@ -93,6 +107,11 @@ else if (_company == null && !_IsLoading)
     {
          NavigationManager.NavigateTo("/chart");
     }
+    private void LogOut()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+    
     private async Task AddToOb()
     {
         if (_company != null)
@@ -103,7 +122,7 @@ else if (_company == null && !_IsLoading)
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _added = true;
             }
            
         }
