@@ -1,20 +1,82 @@
 ﻿@page "/chart"
-@using Microsoft.AspNetCore.Components.Web
-@using ChartJs.Blazor.ChartJS.Common.Properties
-@using ChartJs.Blazor.ChartJS.LineChart
-
+@using global::Stock.Shared.Models
+@using global::Stock.Server.Services
+@using Microsoft.EntityFrameworkCore.Storage.ValueConversion
+@using Syncfusion.Blazor.Charts
+@inject PolygonService PolygonService
 <h3>Stock Chart</h3>
 
-<LineChart Config="@_CharConfig" WIDTH="600" HEIGHT="400" />
+<div class="search-container">
+   <input type="text" @bind="_searchSign"/>
+   <button type="button" @onclick="Select">Confirm</button>
+</div>
 
+<div class="date-container">
+   <label for="_fromDate">From</label>
+   <input type="date" id="_fromDate" @bind="_fromDate"/>
+   <label for="_toDate">To</label>
+   <input type="date" id="_toDate" @bind="_toDate"/>
+   <button type="button" @onclick="Update">Update</button>
+</div>
+
+// TODO Fix the chart
+@if(_company != null)
+{
+   <div class="chart-container">
+      <SfChart>
+         <ChartTitle Text="@_company.Name"></ChartTitle>
+         // Error here
+         <ChartPrimaryXAxis>
+            <DateTimeAxis
+               ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime"
+               IntervalType="Syncfusion.Blazor.Charts.DateTimeIntervalType.Months"
+               LabelFormat="MM"
+            ></DateTimeAxis>
+         </ChartPrimaryXAxis>
+         <ChartPrimaryYAxis>
+            <NumericAxis Title="Price"></NumericAxis>
+         </ChartPrimaryYAxis>
+         <ChartSeriesCollection>
+            <HiloOpenCloseSeries
+               DataSource="@_datas"
+               XName="Date"
+               High="High"
+               Low="Low"
+               Open="Open"
+               Close="Close"
+               Name="Price">
+            </HiloOpenCloseSeries>
+         </ChartSeriesCollection>
+            
+      </SfChart>
+   </div>
+}
 @code
 {
-   private LineConfig _CharConfig;
 
-   protected override void OnInitialized()
+   private Company? _company;
+   private string _searchSign;
+   private List<PriceData> _datas;
+   private DateTime _fromDate;
+   private DateTime _toDate;
+   
+   
+
+
+   private async Task Select()
    {
+      if (!string.IsNullOrEmpty(_searchSign))
+      {
+         _company = await PolygonService.GetCompanyAsync(_searchSign);
+         _datas = await PolygonService.GetDataAsync(_searchSign,_fromDate,_toDate);
+      }
+   }
+
+   private async Task Update()
+   {
+      if(_company != null)
+         _datas = await PolygonService.GetDataAsync(_company.Symbol, _fromDate, _toDate);
       
    }
-    
 }
 
