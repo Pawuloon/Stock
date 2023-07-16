@@ -9,7 +9,7 @@ public class PolygonService : IPolygonService
 
   
     private readonly HttpClient _httpClient;
-    private const string ApiKey = "wLLws_fgOA0rv8cB_toGfvdBCpcd1yCj";
+    private const string ApiKey = "";
 
     public PolygonService(HttpClient httpClient)
     {

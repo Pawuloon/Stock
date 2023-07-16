@@ -10,6 +10,7 @@
       <Compile Remove="Class1.cs" />
       <Compile Remove="Models\Tag.cs" />
       <Compile Remove="DTOs\CompanyDTO.cs" />
+      <Compile Remove="DTOs\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,7 +23,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DTOs\" />
+      <EmbeddedResource Remove="DTOs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="DTOs\**" />
     </ItemGroup>
 
 </Project>
